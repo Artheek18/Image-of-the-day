@@ -7,17 +7,19 @@ import datetime
 load_dotenv()
 
 api_key = os.getenv("NASA_API_KEY")
-date = st.date_input("Select a date", datetime.date.today())
+min_date = datetime.date(1995, 6, 16)
+
+date = st.date_input(
+    "Select a date",
+    datetime.date.today(),
+    min_value=min_date,
+    max_value=datetime.date.today()
+)
+
 url = f"https://api.nasa.gov/planetary/apod?api_key={api_key}&date={date}"
 
 response = requests.get(url)
-#print(response.content)
 content = response.json()
-
-#print(content['title'])
-#print(content['url'])
-#print(content['date'])
-#print(content['explanation'])
 
 
 st.title(content['title'])
