@@ -18,8 +18,11 @@ date = st.date_input(
 
 url = f"https://api.nasa.gov/planetary/apod?api_key={api_key}&date={date}"
 
-response = requests.get(url)
-content = response.json()
+# 🔥 Cache function
+@st.cache_data
+def get_apod(url):
+    return requests.get(url).json()
+content = get_apod(url)
 
 
 st.title(content['title'])
